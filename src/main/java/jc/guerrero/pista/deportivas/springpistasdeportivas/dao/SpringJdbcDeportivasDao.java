@@ -78,14 +78,14 @@ public class SpringJdbcDeportivasDao implements DeportivasDao {
     }
 
     //métodos para obtener la ultima id de cada tabla
-    public int getLastIdUsuarios(){
+    public int getLastIdUsuarios() {
         String sql = "select max(id) from deportivas.usuarios";
         MapSqlParameterSource params = new MapSqlParameterSource();
 
         return parameterJdbcTemplate.queryForObject(sql, params, Integer.class);
     }
 
-    public int getLastIdPistas(){
+    public int getLastIdPistas() {
         String sql = "select max(id) from deportivas.pistas";
 
         MapSqlParameterSource params = new MapSqlParameterSource();
@@ -94,15 +94,15 @@ public class SpringJdbcDeportivasDao implements DeportivasDao {
     }
     ////
 
-    public List<Pista> getAllListaPistas(){
+    public List<Pista> getAllListaPistas() {
         String sql = "select id, nombre, tipo, ubicacion from pistas";
 
         MapSqlParameterSource params = new MapSqlParameterSource();
 
-        return  parameterJdbcTemplate.query(sql, params, new PistaRowMapper());
+        return parameterJdbcTemplate.query(sql, params, new PistaRowMapper());
     }
 
-    public List<Pista> getListaPistasByTipo(String tipo){
+    public List<Pista> getListaPistasByTipo(String tipo) {
         String sql = "select id, nombre, tipo, ubicacion from pistas where tipo = :tipo";
 
         MapSqlParameterSource params = new MapSqlParameterSource();
@@ -112,20 +112,13 @@ public class SpringJdbcDeportivasDao implements DeportivasDao {
     }
 
 
-
-    public Pista getPistaById(int pistaId){
+    public Pista getPistaById(int pistaId) {
         String sql = "select id, nombre, tipo, ubicacion from pistas where id = :id";
 
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("id", pistaId);
 
-        Pista pista;
-        try {
-            pista = parameterJdbcTemplate.queryForObject(sql, params, new PistaRowMapper());
-        } catch (EmptyResultDataAccessException ex) {
-            pista = null;
-        }
-        return pista;
+        return parameterJdbcTemplate.queryForObject(sql, params, new PistaRowMapper());
     }
 
 

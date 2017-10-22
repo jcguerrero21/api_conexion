@@ -83,7 +83,7 @@ public class DeportivasController {
      *
      * @return
      */
-    @RequestMapping(value = "/pistas/{tipo}", method = RequestMethod.GET,  produces = "application/json")
+    @RequestMapping(value = "/pistasTipo/{tipo}", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<List<Pista>> getListadoPistasPorTipo(@PathVariable String tipo) {
         List pista = deportivasService.getListaPistasPorTipo(tipo);
         return new ResponseEntity<>(pista, HttpStatus.OK);
@@ -95,7 +95,7 @@ public class DeportivasController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/pistas/{id}", method = RequestMethod.GET,  produces = "application/json")
+    @RequestMapping(value = "/pistas/{id}", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<Pista> getPistaConcreta(@PathVariable int id) {
         Pista pista = deportivasService.getPistaConcretaPorId(id);
         return new ResponseEntity<>(pista, HttpStatus.OK);
