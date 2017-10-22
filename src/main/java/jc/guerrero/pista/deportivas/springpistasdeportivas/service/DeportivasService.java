@@ -5,6 +5,8 @@ import jc.guerrero.pista.deportivas.springpistasdeportivas.domain.Pista;
 import jc.guerrero.pista.deportivas.springpistasdeportivas.domain.Rol;
 import jc.guerrero.pista.deportivas.springpistasdeportivas.domain.Usuario;
 
+import java.util.List;
+
 /**
  * Created by Juan Carlos on 26/09/2017.
  */
@@ -37,4 +39,26 @@ public interface DeportivasService {
      * @param alquilerPista
      */
     void insertarFechaAlquiler(AlquilerPista alquilerPista);
+
+    /**
+     * método para obtener el listado de todas las pistas
+     *
+     * @return
+     */
+    List<Pista> getListadoTodasLasPistas();
+
+    /**
+     * método para obtener las pistas por su tipo
+     *
+     * @return
+     */
+    List<Pista> getListaPistasPorTipo(String tipo);
+
+    /**
+     * método para obtener la pista por su id concreta
+     *
+     * @param pistaId
+     * @return
+     */
+    Pista getPistaConcretaPorId(int pistaId);
 }
