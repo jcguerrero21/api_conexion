@@ -1,4 +1,4 @@
-package jc.guerrero.pista.deportivas.springpistasdeportivas;
+package jc.guerrero.pista.deportivas.springpistasdeportivas.web;
 
 import jc.guerrero.pista.deportivas.springpistasdeportivas.domain.AlquilerPista;
 import jc.guerrero.pista.deportivas.springpistasdeportivas.domain.Pista;
@@ -63,7 +63,7 @@ public class DeportivasController {
      */
     @RequestMapping(path="/alquilerPista", produces = "application/json", method = RequestMethod.POST)
     public void alquilarPista(@RequestBody AlquilerPista alquilerPista) {
-        deportivasService.insertarFechaAlquiler(alquilerPista);
+        deportivasService.alquilarPista(alquilerPista);
     }
 
     /**

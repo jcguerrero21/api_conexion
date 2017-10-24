@@ -5,6 +5,7 @@ import jc.guerrero.pista.deportivas.springpistasdeportivas.domain.Pista;
 import jc.guerrero.pista.deportivas.springpistasdeportivas.domain.Rol;
 import jc.guerrero.pista.deportivas.springpistasdeportivas.domain.Usuario;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,13 +35,6 @@ public interface DeportivasService {
     void insertarPista(Pista pista);
 
     /**
-     * método para insertar la fecha de alquiler de la pista
-     *
-     * @param alquilerPista
-     */
-    void insertarFechaAlquiler(AlquilerPista alquilerPista);
-
-    /**
      * método para obtener el listado de todas las pistas
      *
      * @return
@@ -61,4 +55,14 @@ public interface DeportivasService {
      * @return
      */
     Pista getPistaConcretaPorId(int pistaId);
+
+    /**
+     * método para que un usuario pueda alquilar una pista en una fecha y hora concreta
+     *
+     * @param usuarioId
+     * @param pistaId
+     * @param fecha
+     * @param hora
+     */
+    void alquilarPista(AlquilerPista alquilerPista);
 }

@@ -28,12 +28,12 @@ public class Horarios implements Serializable{
     public final static int HORA_21_ID = 10;
 
     private int id;
-    private Time hora;
+    private String hora;
 
     public Horarios(){
     }
 
-    public Horarios(int id, Time hora) {
+    public Horarios(int id, String hora) {
         this.id = id;
         this.hora = hora;
     }
@@ -47,11 +47,11 @@ public class Horarios implements Serializable{
         return this;
     }
 
-    public Time getHora() {
+    public String getHora() {
         return hora;
     }
 
-    public Horarios setHora(Time hora) {
+    public Horarios setHora(String hora) {
         this.hora = hora;
         return this;
     }

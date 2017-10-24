@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-10-2017 a las 13:36:30
+-- Tiempo de generación: 25-10-2017 a las 00:52:19
 -- Versión del servidor: 10.1.19-MariaDB
 -- Versión de PHP: 5.6.24
 
@@ -46,6 +46,13 @@ CREATE TABLE `fecha_alquiler_pista` (
   `hora` int(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `fecha_alquiler_pista`
+--
+
+INSERT INTO `fecha_alquiler_pista` (`usuario_id`, `pista_id`, `fecha`, `hora`) VALUES
+(5, 2, '2017-10-25', 4);
+
 -- --------------------------------------------------------
 
 --
@@ -54,7 +61,7 @@ CREATE TABLE `fecha_alquiler_pista` (
 
 CREATE TABLE `horarios` (
   `id` int(2) NOT NULL,
-  `hora` time NOT NULL
+  `hora` varchar(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -137,7 +144,8 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `nombre`, `apellidos`, `dni`, `fecha_alta`, `localidad`, `direccion`, `id_rol`, `nombre_usuario`) VALUES
-(5, 'juan carlos', 'guerrero moyano', '07272312J', '2017-10-22', 'Azuaga', 'estalajes 46', 2, 'jcguerrero21');
+(5, 'juan carlos', 'guerrero moyano', '07272312J', '2017-10-22', 'Azuaga', 'estalajes 46', 2, 'jcguerrero21'),
+(6, 'juan carlos', 'guerrero moyano', '07272312J', '2017-10-25', 'Azuaga', 'estalajes 46', 2, 'jcguerrero21');
 
 --
 -- Índices para tablas volcadas

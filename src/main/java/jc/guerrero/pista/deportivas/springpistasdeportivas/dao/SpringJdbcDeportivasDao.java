@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -56,23 +57,10 @@ public class SpringJdbcDeportivasDao implements DeportivasDao {
         String sql = "insert into deportivas.pistas (id, nombre, tipo, ubicacion) values (:id, :nombre, :tipo, :ubicacion)";
 
         MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("id", pista.getId_pista());
+        params.addValue("id", pista.getId());
         params.addValue("nombre", pista.getNombre());
         params.addValue("tipo", pista.getTipo());
         params.addValue("ubicacion", pista.getUbicacion());
-
-        this.parameterJdbcTemplate.update(sql, params);
-    }
-
-    public void insertFechaAqlquiler(AlquilerPista alquilerPista) {
-        String sql = "insert into deportivas.fecha_alquiler_pista (usuario_id, pista_id, fecha, hora) " +
-                "values (:usuarioId, :pistaId, :fechaReserva, :fecha, :hora)";
-
-        MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("usuarioId", alquilerPista.getId_usuario());
-        params.addValue("pistaId", alquilerPista.getId_pista());
-        params.addValue("fecha", alquilerPista.getFecha_reserva());
-        params.addValue("hora", alquilerPista.getHora().getId());
 
         this.parameterJdbcTemplate.update(sql, params);
     }
@@ -121,13 +109,38 @@ public class SpringJdbcDeportivasDao implements DeportivasDao {
         return parameterJdbcTemplate.queryForObject(sql, params, new PistaRowMapper());
     }
 
+    public void alquilarPista(AlquilerPista alquilerPista) {
+        String sql = "insert into deportivas.fecha_alquiler_pista(usuario_id, pista_id, fecha, hora) " +
+                "values (:usuarioId, :pistaId, :fecha, :hora)";
+
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("usuarioId", alquilerPista.getId_usuario().getId());
+        params.addValue("pistaId", alquilerPista.getId_pista().getId());
+        params.addValue("fecha", alquilerPista.getFecha_reserva());
+        params.addValue("hora", alquilerPista.getHora().getId());
+
+        parameterJdbcTemplate.update(sql, params);
+    }
+
+    public int comprobarPistaDisponibleFechaHora(AlquilerPista alquilerPista){
+        String sql = "select count(*)  from deportivas.fecha_alquiler_pista " +
+                "where pista_id = :pistaId and fecha = :fecha and hora = :hora";
+
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("pistaId", alquilerPista.getId_pista().getId());
+        params.addValue("fecha", alquilerPista.getFecha_reserva());
+        params.addValue("hora", alquilerPista.getHora().getId());
+
+        return parameterJdbcTemplate.queryForObject(sql, params, Integer.class);
+    }
+
 
     /*ROWMAPPERS*/
     public class PistaRowMapper implements RowMapper<Pista> {
         public Pista mapRow(ResultSet rs, int i) throws SQLException {
             Pista pista = new Pista();
 
-            pista.setId_pista(rs.getInt("id"));
+            pista.setId(rs.getInt("id"));
             pista.setNombre(rs.getString("nombre"));
             pista.setTipo(rs.getString("tipo"));
             pista.setUbicacion(rs.getString("ubicacion"));

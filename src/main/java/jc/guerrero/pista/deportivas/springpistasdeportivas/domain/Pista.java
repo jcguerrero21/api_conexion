@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 public class Pista implements Serializable {
 
-    private int id_pista;
+    private int id;
     private String nombre;
     private String ubicacion;
     private String Tipo;
@@ -17,18 +17,18 @@ public class Pista implements Serializable {
     }
 
     public Pista(int id_pista, String nombre, String ubicacion, String tipo) {
-        this.id_pista = id_pista;
+        this.id = id_pista;
         this.nombre = nombre;
         this.ubicacion = ubicacion;
         Tipo = tipo;
     }
 
-    public int getId_pista() {
-        return id_pista;
+    public int getId() {
+        return id;
     }
 
-    public Pista setId_pista(int id_pista) {
-        this.id_pista = id_pista;
+    public Pista setId(int id_pista) {
+        this.id = id_pista;
         return this;
     }
 
