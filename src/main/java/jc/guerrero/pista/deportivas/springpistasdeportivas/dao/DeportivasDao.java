@@ -79,10 +79,20 @@ public interface DeportivasDao {
     void alquilarPista(AlquilerPista alquilerPista);
 
     /**
-     * meétdo que devolverá un valor dependiendo de si una pista está disponible en una fecha y hora determinada o no
+     * método que devolverá un valor dependiendo de si una pista está disponible en una fecha y hora determinada o no
      *
      * @param alquilerPista
      * @return
      */
     int comprobarPistaDisponibleFechaHora(AlquilerPista alquilerPista);
+
+    /**
+     * método que nos devolvera las pistas que un usuario tiene alquiladas en una fecha que aún no ha expirado
+     *
+     * @param usuarioId
+     * @return
+     */
+    List<AlquilerPista> getPistaAlquiladaByUsuario(int usuarioId, String fecha);
+
+    //void deleteAlquilerPista(AlquilerPista alquilerPista);
 }

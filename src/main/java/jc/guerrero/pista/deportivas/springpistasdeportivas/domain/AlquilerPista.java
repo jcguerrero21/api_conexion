@@ -10,13 +10,16 @@ public class AlquilerPista implements Serializable {
 
     private Usuario id_usuario;
     private Pista id_pista;
-    private Date fecha_reserva;
+    private String fecha_reserva;
     private Horarios hora;
 
     public AlquilerPista() {
+        id_usuario = new Usuario();
+        id_pista = new Pista();
+        hora = new Horarios();
     }
 
-    public AlquilerPista(Usuario id_usuario, Pista id_pista, Date fecha_reserva, Horarios hora) {
+    public AlquilerPista(Usuario id_usuario, Pista id_pista, String fecha_reserva, Horarios hora) {
         this.id_usuario = id_usuario;
         this.id_pista = id_pista;
         this.fecha_reserva = fecha_reserva;
@@ -49,11 +52,11 @@ public class AlquilerPista implements Serializable {
         return this;
     }
 
-    public Date getFecha_reserva() {
+    public String getFecha_reserva() {
         return fecha_reserva;
     }
 
-    public AlquilerPista setFecha_reserva(Date fecha_reserva) {
+    public AlquilerPista setFecha_reserva(String fecha_reserva) {
         this.fecha_reserva = fecha_reserva;
         return this;
     }

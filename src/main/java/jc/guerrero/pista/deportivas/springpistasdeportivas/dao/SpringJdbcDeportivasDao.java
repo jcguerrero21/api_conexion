@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -28,13 +29,14 @@ public class SpringJdbcDeportivasDao implements DeportivasDao {
 
     public void insertUsuario(Usuario usuario) {
         String sql = "insert into deportivas.usuarios (id, nombre, apellidos, dni, fecha_alta, localidad, direccion, id_rol, nombre_usuario) values " +
-                "(:id, :nombre, :apellidos, :dni, CURRENT_DATE, :localidad, :direccion, :id_rol, :username)";
+                "(:id, :nombre, :apellidos, :dni, :fecha, :localidad, :direccion, :id_rol, :username)";
 
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("id", usuario.getId());
         params.addValue("nombre", usuario.getNombre());
         params.addValue("apellidos", usuario.getApellidos());
         params.addValue("dni", usuario.getDni());
+        params.addValue("fecha", new SimpleDateFormat("dd-MM-yyyy").format(new Date()));
         params.addValue("localidad", usuario.getLocalidad());
         params.addValue("direccion", usuario.getDireccion());
         params.addValue("id_rol", usuario.getId_rol().getId());
@@ -135,6 +137,17 @@ public class SpringJdbcDeportivasDao implements DeportivasDao {
     }
 
 
+    public List<AlquilerPista> getPistaAlquiladaByUsuario(int usuarioId, String fecha){
+        String sql = "select t2.nombre as nombre, t1.fecha as fecha, t3.hora as hora from fecha_alquiler_pista t1, pistas t2, horarios t3 " +
+                "WHERE t1.usuario_id = :usuarioId AND t1.pista_id = t2.id AND t3.id = t1.hora AND t1.fecha like :fecha";
+
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("usuarioId", usuarioId);
+        params.addValue("fecha",fecha);
+
+        return parameterJdbcTemplate.query(sql, params, new PistaAlquiladaRowMapper());
+    }
+
     /*ROWMAPPERS*/
     public class PistaRowMapper implements RowMapper<Pista> {
         public Pista mapRow(ResultSet rs, int i) throws SQLException {
@@ -146,6 +159,18 @@ public class SpringJdbcDeportivasDao implements DeportivasDao {
             pista.setUbicacion(rs.getString("ubicacion"));
 
             return pista;
+        }
+    }
+
+    public class PistaAlquiladaRowMapper implements RowMapper<AlquilerPista> {
+        public AlquilerPista mapRow(ResultSet rs, int i) throws SQLException {
+            AlquilerPista alquilerPista = new AlquilerPista();
+
+            alquilerPista.getId_pista().setNombre(rs.getString("nombre"));
+            alquilerPista.setFecha_reserva(rs.getString("fecha"));
+            alquilerPista.getHora().setHora(rs.getString("hora"));
+
+            return alquilerPista;
         }
     }
 

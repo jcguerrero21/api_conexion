@@ -101,5 +101,19 @@ public class DeportivasController {
         return new ResponseEntity<>(pista, HttpStatus.OK);
     }
 
+    /**
+     * listado de las pistas (con su hora de alquiler) que un usuario tiene alquiladas en una fecha concreta
+     *
+     * @return
+     */
+    @RequestMapping(value = "/pistasAlquiladas/{usuarioId}/{fecha}", method = RequestMethod.GET,  produces = "application/json")
+    public ResponseEntity<List<AlquilerPista>> getListadoPistasAlquiladasEnUnaFechaByUsuario(@PathVariable int usuarioId,
+                                                                                             @PathVariable String fecha) {
+        List alquilerPista = deportivasService.obtenerPistasAlquiladasPorUsuario(usuarioId,fecha);
+        return new ResponseEntity<>(alquilerPista, HttpStatus.OK);
+    }
+
+
+
 
 }

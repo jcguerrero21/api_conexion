@@ -60,4 +60,8 @@ public class DeportivasManager implements DeportivasService {
         }
     }
 
+    public List<AlquilerPista> obtenerPistasAlquiladasPorUsuario(int usuarioId, String fecha){
+        return deporDao.getPistaAlquiladaByUsuario(usuarioId, fecha);
+    }
+
 }

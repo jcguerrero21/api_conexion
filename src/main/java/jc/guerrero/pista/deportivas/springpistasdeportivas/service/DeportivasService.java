@@ -59,10 +59,15 @@ public interface DeportivasService {
     /**
      * método para que un usuario pueda alquilar una pista en una fecha y hora concreta
      *
-     * @param usuarioId
-     * @param pistaId
-     * @param fecha
-     * @param hora
+     * @param alquilerPista
      */
     void alquilarPista(AlquilerPista alquilerPista);
+
+    /**
+     * método para obtener las pistas que tiene un usuario alquiladas en una fecha concreta
+     *
+     * @param usuarioId
+     * @return
+     */
+    List<AlquilerPista> obtenerPistasAlquiladasPorUsuario(int usuarioId, String fecha);
 }
