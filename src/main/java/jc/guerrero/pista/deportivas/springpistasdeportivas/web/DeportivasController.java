@@ -20,7 +20,7 @@ import java.util.List;
  */
 
 @Controller
-@RequestMapping(path="/deportivas")
+@RequestMapping(path = "/deportivas")
 public class DeportivasController {
 
     @Autowired
@@ -32,8 +32,8 @@ public class DeportivasController {
      * @param usuario
      */
     @RequestMapping(value = "/insertarUsuario", produces = "application/json", method = RequestMethod.POST)
-    public void insertarUsuario (@RequestBody Usuario usuario) {
-       deportivasService.insertarUsuario(usuario);
+    public void insertarUsuario(@RequestBody Usuario usuario) {
+        deportivasService.insertarUsuario(usuario);
     }
 
     /**
@@ -41,7 +41,7 @@ public class DeportivasController {
      *
      * @param rol
      */
-    @RequestMapping(value="/insertarRol", produces = "application/json", method = RequestMethod.POST)
+    @RequestMapping(value = "/insertarRol", produces = "application/json", method = RequestMethod.POST)
     public void insertarRol(@RequestBody Rol rol) {
         deportivasService.insertarRole(rol);
     }
@@ -51,7 +51,7 @@ public class DeportivasController {
      *
      * @param pista
      */
-    @RequestMapping(path="/insertarPista", produces = "application/json", method = RequestMethod.POST)
+    @RequestMapping(path = "/insertarPista", produces = "application/json", method = RequestMethod.POST)
     public void insertarPista(@RequestBody Pista pista) {
         deportivasService.insertarPista(pista);
     }
@@ -61,7 +61,7 @@ public class DeportivasController {
      *
      * @param alquilerPista
      */
-    @RequestMapping(path="/alquilerPista", produces = "application/json", method = RequestMethod.POST)
+    @RequestMapping(path = "/alquilerPista", produces = "application/json", method = RequestMethod.POST)
     public void alquilarPista(@RequestBody AlquilerPista alquilerPista) {
         deportivasService.alquilarPista(alquilerPista);
     }
@@ -72,7 +72,7 @@ public class DeportivasController {
      * @return
      */
 
-    @RequestMapping(value = "/pistas", method = RequestMethod.GET,  produces = "application/json")
+    @RequestMapping(value = "/pistas", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<List<Pista>> getListadoPistas() {
         List pista = deportivasService.getListadoTodasLasPistas();
         return new ResponseEntity<>(pista, HttpStatus.OK);
@@ -106,13 +106,24 @@ public class DeportivasController {
      *
      * @return
      */
-    @RequestMapping(value = "/pistasAlquiladas/{usuarioId}/{fecha}", method = RequestMethod.GET,  produces = "application/json")
+    @RequestMapping(value = "/pistasAlquiladas/{usuarioId}/{fecha}", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<List<AlquilerPista>> getListadoPistasAlquiladasEnUnaFechaByUsuario(@PathVariable int usuarioId,
                                                                                              @PathVariable String fecha) {
-        List alquilerPista = deportivasService.obtenerPistasAlquiladasPorUsuario(usuarioId,fecha);
+        List alquilerPista = deportivasService.obtenerPistasAlquiladasPorUsuario(usuarioId, fecha);
         return new ResponseEntity<>(alquilerPista, HttpStatus.OK);
     }
 
+    /**
+     * borrar alquiler de pista de un usuario
+     *
+     * @param usuarioId
+     * @param alquilerPista
+     */
+    @RequestMapping(value = "/pistasAlquiladas/{usuarioId}", method = RequestMethod.DELETE, produces = "application/json")
+    public void borrarPistaAlquiladaPorUsuario(@PathVariable int usuarioId,
+                                               @RequestBody AlquilerPista alquilerPista) {
+        deportivasService.borrarPistaAlquiladaPorUsuario(alquilerPista, usuarioId);
+    }
 
 
 

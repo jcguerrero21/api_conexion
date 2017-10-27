@@ -15,11 +15,10 @@ public class UtilidadesDeportivas {
         int horaId = 0;
 
         for (int i = 0; i < HORAS.length && horaId == 0; i++) {
-            if (HORAS[i].equals(horaString)){
+            if (HORAS[i].equals(horaString)) {
                 return HORAS_ID[i];
             }
         }
-
         return horaId;
     }
 

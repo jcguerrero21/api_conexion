@@ -138,14 +138,30 @@ public class SpringJdbcDeportivasDao implements DeportivasDao {
 
 
     public List<AlquilerPista> getPistaAlquiladaByUsuario(int usuarioId, String fecha){
-        String sql = "select t2.nombre as nombre, t1.fecha as fecha, t3.hora as hora from fecha_alquiler_pista t1, pistas t2, horarios t3 " +
-                "WHERE t1.usuario_id = :usuarioId AND t1.pista_id = t2.id AND t3.id = t1.hora AND t1.fecha like :fecha";
+        String sql = "select t2.id as idPista, t2.nombre as nombre, t1.fecha as fecha," +
+                "t3.hora as hora, t4.nombre as nombreUsuario, t4.apellidos as apellidos " +
+                "from deportivas.fecha_alquiler_pista t1, pistas t2, horarios t3, usuarios t4 " +
+                "WHERE t1.usuario_id = :usuarioId AND t1.pista_id = t2.id AND t3.id = t1.hora " +
+                "AND t1.usuario_id = t4.id AND t1.fecha like :fecha";
 
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("usuarioId", usuarioId);
         params.addValue("fecha",fecha);
 
         return parameterJdbcTemplate.query(sql, params, new PistaAlquiladaRowMapper());
+    }
+
+    public void deleteAlquilerPista(AlquilerPista alquilerPista, int usuarioId){
+        String sql = "delete from deportivas.fecha_alquiler_pista where " +
+                "usuario_id = :usuarioId and pista_id = :pistaId and fecha = :fecha and hora = :hora";
+
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("usuarioId", usuarioId);
+        params.addValue("pistaId", alquilerPista.getId_pista().getId());
+        params.addValue("fecha", alquilerPista.getFecha_reserva());
+        params.addValue("hora", alquilerPista.getHora().getId());
+
+        parameterJdbcTemplate.update(sql,params);
     }
 
     /*ROWMAPPERS*/
@@ -166,13 +182,15 @@ public class SpringJdbcDeportivasDao implements DeportivasDao {
         public AlquilerPista mapRow(ResultSet rs, int i) throws SQLException {
             AlquilerPista alquilerPista = new AlquilerPista();
 
+            alquilerPista.getId_pista().setId(rs.getInt("idPista"));
             alquilerPista.getId_pista().setNombre(rs.getString("nombre"));
             alquilerPista.setFecha_reserva(rs.getString("fecha"));
             alquilerPista.getHora().setHora(rs.getString("hora"));
+            alquilerPista.getId_usuario().setNombre(rs.getString("nombreUsuario"));
+            alquilerPista.getId_usuario().setApellidos(rs.getString("apellidos"));
 
             return alquilerPista;
         }
     }
-
 
 }

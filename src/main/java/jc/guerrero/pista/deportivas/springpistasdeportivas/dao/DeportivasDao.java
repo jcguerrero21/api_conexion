@@ -94,5 +94,11 @@ public interface DeportivasDao {
      */
     List<AlquilerPista> getPistaAlquiladaByUsuario(int usuarioId, String fecha);
 
-    //void deleteAlquilerPista(AlquilerPista alquilerPista);
+    /**
+     * método para borrar el alquiler de una pista que ha hecho un usuario
+     *
+     * @param alquilerPista
+     * @param usuario
+     */
+    void deleteAlquilerPista(AlquilerPista alquilerPista, int usuario);
 }

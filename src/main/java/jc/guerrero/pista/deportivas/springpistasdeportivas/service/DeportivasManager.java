@@ -64,4 +64,10 @@ public class DeportivasManager implements DeportivasService {
         return deporDao.getPistaAlquiladaByUsuario(usuarioId, fecha);
     }
 
+    public void borrarPistaAlquiladaPorUsuario(AlquilerPista alquilerPista, int usuarioId){
+        int horaId = UtilidadesDeportivas.convertirHorasTipoStrToInt(alquilerPista.getHora().getHora());
+        alquilerPista.getHora().setId(horaId);
+        deporDao.deleteAlquilerPista(alquilerPista, usuarioId);
+    }
+
 }

@@ -70,4 +70,12 @@ public interface DeportivasService {
      * @return
      */
     List<AlquilerPista> obtenerPistasAlquiladasPorUsuario(int usuarioId, String fecha);
+
+    /**
+     * método para borrar una pista que un usuario tenga alquilada
+     *
+     * @param alquilerPista
+     * @param usuarioId
+     */
+    void borrarPistaAlquiladaPorUsuario(AlquilerPista alquilerPista, int usuarioId);
 }
