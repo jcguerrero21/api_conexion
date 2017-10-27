@@ -18,11 +18,12 @@ public class Usuario implements Serializable {
     private String direccion;
     private Rol id_rol;
     private String nombre_usuario;
+    private String contraseña;
 
     public Usuario() {
     }
 
-    public Usuario(int id, String nombre, String apellidos, String dni, Date fecha_alta, String localidad, String direccion, Rol id_rol, String username) {
+    public Usuario(int id, String nombre, String apellidos, String dni, Date fecha_alta, String localidad, String direccion, Rol id_rol, String username, String contraseña) {
         super();
         this.id = id;
         this.nombre = nombre;
@@ -33,6 +34,7 @@ public class Usuario implements Serializable {
         this.direccion = direccion;
         this.id_rol = id_rol;
         this.nombre_usuario = username;
+        this.contraseña = contraseña;
     }
 
     public int getId() {
@@ -113,6 +115,15 @@ public class Usuario implements Serializable {
 
     public Usuario setNombre_usuario(String nombre_usuario) {
         this.nombre_usuario = nombre_usuario;
+        return this;
+    }
+
+    public String getContraseña() {
+        return contraseña;
+    }
+
+    public Usuario setContraseña(String contraseña) {
+        this.contraseña = contraseña;
         return this;
     }
 }

@@ -21,10 +21,15 @@ public class DeportivasManager implements DeportivasService {
     private DeportivasDao deporDao;
 
     public void insertarUsuario(Usuario usuario) {
-        //creamos una variable para ir aumentando la id del usuario
-        int usuarioId = deporDao.getLastIdUsuarios();
-        usuario.setId(usuarioId + 1);
-        deporDao.insertUsuario(usuario);
+        //comprobamos si hay algun usuario insertado y si no lo hay le pasamos la id a 1
+        if (deporDao.getHayUsuarios() == 0){
+            usuario.setId(1);
+            deporDao.insertUsuario(usuario);
+        } else { //creamos una variable para ir aumentando la id del usuario
+            int usuarioId = deporDao.getLastIdUsuarios();
+            usuario.setId(usuarioId + 1);
+            deporDao.insertUsuario(usuario);
+        }
     }
 
     public void insertarRole(Rol rol) {
@@ -32,9 +37,15 @@ public class DeportivasManager implements DeportivasService {
     }
 
     public void insertarPista(Pista pista) {
-        //creamos una variable para ir aumentando la id de la pista usuario
-        pista.setId(deporDao.getLastIdPistas() + 1);
-        deporDao.insertPista(pista);
+        //comprobamos si hay alguna pista insertada y si no lo hay le pasamos la id a 1
+        if (deporDao.getHayPistas() == 0){
+            pista.setId(1);
+            deporDao.insertPista(pista);
+        } else { //si la hay creamos una variable que nos devuelva la ultima id de la pista y le aumentamos +1
+            int pistaId = deporDao.getLastIdUsuarios();
+            pista.setId(pistaId + 1);
+            deporDao.insertPista(pista);
+        }
     }
 
     public List<Pista> getListadoTodasLasPistas() {

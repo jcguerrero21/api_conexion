@@ -43,11 +43,25 @@ public interface DeportivasDao {
     int getLastIdUsuarios();
 
     /**
+     * método para obtener si hay algún usuario en la base de datos
+     *
+     * @return
+     */
+    int getHayUsuarios();
+
+    /**
      * método para obtener la última id de pista existente
      *
      * @return
      */
     int getLastIdPistas();
+
+    /**
+     * método para obtener si hay alguna pista insertada
+     *
+     * @return
+     */
+    int getHayPistas();
 
     /**
      * método para obtener el listado de todas las pistas

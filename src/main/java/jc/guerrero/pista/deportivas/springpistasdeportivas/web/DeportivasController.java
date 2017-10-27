@@ -125,6 +125,12 @@ public class DeportivasController {
         deportivasService.borrarPistaAlquiladaPorUsuario(alquilerPista, usuarioId);
     }
 
+    @RequestMapping(value = "/auth/login", method = RequestMethod.POST, produces = "application/json")
+    public void obtenerTokenUsuario(@PathVariable int usuarioId,
+                                    @RequestBody AlquilerPista alquilerPista) {
+        deportivasService.borrarPistaAlquiladaPorUsuario(alquilerPista, usuarioId);
+    }
+
 
 
 }

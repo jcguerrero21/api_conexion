@@ -28,8 +28,8 @@ public class SpringJdbcDeportivasDao implements DeportivasDao {
     private NamedParameterJdbcTemplate parameterJdbcTemplate;
 
     public void insertUsuario(Usuario usuario) {
-        String sql = "insert into deportivas.usuarios (id, nombre, apellidos, dni, fecha_alta, localidad, direccion, id_rol, nombre_usuario) values " +
-                "(:id, :nombre, :apellidos, :dni, :fecha, :localidad, :direccion, :id_rol, :username)";
+        String sql = "insert into deportivas.usuarios (id, nombre, apellidos, dni, fecha_alta, localidad, direccion, id_rol, nombre_usuario, contraseña) values " +
+                "(:id, :nombre, :apellidos, :dni, :fecha, :localidad, :direccion, :id_rol, :username, :contraseña)";
 
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("id", usuario.getId());
@@ -41,6 +41,7 @@ public class SpringJdbcDeportivasDao implements DeportivasDao {
         params.addValue("direccion", usuario.getDireccion());
         params.addValue("id_rol", usuario.getId_rol().getId());
         params.addValue("username", usuario.getNombre_usuario());
+        params.addValue("contraseña", usuario.getContraseña());
 
         this.parameterJdbcTemplate.update(sql, params);
     }
@@ -68,8 +69,23 @@ public class SpringJdbcDeportivasDao implements DeportivasDao {
     }
 
     //métodos para obtener la ultima id de cada tabla
+    public int getHayUsuarios(){
+        String sql = "select count(id) from deportivas.usuarios";
+        MapSqlParameterSource params = new MapSqlParameterSource();
+
+        return parameterJdbcTemplate.queryForObject(sql, params, Integer.class);
+    }
+
     public int getLastIdUsuarios() {
         String sql = "select max(id) from deportivas.usuarios";
+        MapSqlParameterSource params = new MapSqlParameterSource();
+
+        return parameterJdbcTemplate.queryForObject(sql, params, Integer.class);
+    }
+
+    public int getHayPistas(){
+        String sql = "select count(id) from deportivas.pistas";
+
         MapSqlParameterSource params = new MapSqlParameterSource();
 
         return parameterJdbcTemplate.queryForObject(sql, params, Integer.class);
