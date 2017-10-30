@@ -115,4 +115,13 @@ public interface DeportivasDao {
      * @param usuario
      */
     void deleteAlquilerPista(AlquilerPista alquilerPista, int usuario);
+
+    /**
+     * método que nos devuelve si hay un usuario existente con esa nombre de usuario y esa contraseña
+     *
+     * @param userName
+     * @param password
+     * @return
+     */
+    int getUsuarioByNameAndPassword(String userName, String password);
 }

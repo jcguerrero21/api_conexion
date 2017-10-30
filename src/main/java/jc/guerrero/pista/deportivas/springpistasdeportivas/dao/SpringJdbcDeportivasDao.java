@@ -180,6 +180,17 @@ public class SpringJdbcDeportivasDao implements DeportivasDao {
         parameterJdbcTemplate.update(sql,params);
     }
 
+    public int getUsuarioByNameAndPassword(String userName, String password){
+        String sql = "SELECT COUNT(*) FROM deportivas.usuarios WHERE " +
+                "nombre_usuario like \":user\" AND contraseña LIKE \":contraseña\"";
+
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("user", userName);
+        params.addValue("contraseña", password);
+
+        return parameterJdbcTemplate.queryForObject(sql, params, Integer.class);
+    }
+
     /*ROWMAPPERS*/
     public class PistaRowMapper implements RowMapper<Pista> {
         public Pista mapRow(ResultSet rs, int i) throws SQLException {
