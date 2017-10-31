@@ -1,4 +1,4 @@
-package jc.guerrero.pista.deportivas.springpistasdeportivas.Security;
+package jc.guerrero.pista.deportivas.springpistasdeportivas.security;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -11,9 +11,6 @@ import java.util.Date;
 
 import static java.util.Collections.emptyList;
 
-/**
- * Created by Juan Carlos on 30/10/2017.
- */
 public class JwtUtil {
 
     // Método para crear el JWT y enviarlo al cliente en el header de la respuesta
@@ -24,7 +21,7 @@ public class JwtUtil {
 
                 // Vamos a asignar un tiempo de expiracion de 1 minuto
                 // solo con fines demostrativos en el video que hay al final
-                .setExpiration(new Date(System.currentTimeMillis() + 60000000))
+                .setExpiration(new Date(System.currentTimeMillis() + 600000)) //el token que obtendremos tendrá una validez de 10 minutos
 
                 // Hash con el que firmaremos la clave
                 .signWith(SignatureAlgorithm.HS512, "P@tit0")

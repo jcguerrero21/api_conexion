@@ -1,4 +1,4 @@
-package jc.guerrero.pista.deportivas.springpistasdeportivas.Security;
+package jc.guerrero.pista.deportivas.springpistasdeportivas.security;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /**
- * Created by Juan Carlos on 30/10/2017.
+ * Las peticiones que no sean /login pasarán por este filtro
+ * el cuál se encarga de pasar el "request" a nuestra clase de utilidad JwtUtil
+ * para que valide el token.
  */
 public class JwtFilter extends GenericFilterBean {
 

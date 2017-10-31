@@ -3,6 +3,9 @@ package jc.guerrero.pista.deportivas.springpistasdeportivas.web;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import jc.guerrero.pista.deportivas.springpistasdeportivas.security.JwtUtil;
+import jc.guerrero.pista.deportivas.springpistasdeportivas.security.LoginFilter;
+import jc.guerrero.pista.deportivas.springpistasdeportivas.security.SecurityConfig;
 import jc.guerrero.pista.deportivas.springpistasdeportivas.domain.AlquilerPista;
 import jc.guerrero.pista.deportivas.springpistasdeportivas.domain.Pista;
 import jc.guerrero.pista.deportivas.springpistasdeportivas.domain.Rol;
@@ -36,14 +39,15 @@ public class DeportivasController {
      *
      * @param usuario
      */
+    @ApiOperation(value = "Insertar Usuarios", response = Usuario.class,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Petición realizada correctamente", response = AlquilerPista.class)}
+    )
     @RequestMapping(value = "/insertarUsuario", produces = "application/json", method = RequestMethod.POST)
-    public void insertarUsuario(@RequestBody Usuario usuario, HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        if (session == null) {
-            deportivasService.insertarUsuario(usuario);
-        }
-        session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
+    public ResponseEntity insertarUsuario(@RequestBody Usuario usuario, HttpServletRequest request) {
         deportivasService.insertarUsuario(usuario);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     /**
@@ -51,9 +55,15 @@ public class DeportivasController {
      *
      * @param rol
      */
+    @ApiOperation(value = "Insertar Roles", response = Rol.class,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Petición realizada correctamente", response = Rol.class)}
+    )
     @RequestMapping(value = "/insertarRol", produces = "application/json", method = RequestMethod.POST)
-    public void insertarRol(@RequestBody Rol rol) {
+    public ResponseEntity insertarRol(@RequestBody Rol rol) {
         deportivasService.insertarRole(rol);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     /**
@@ -61,9 +71,15 @@ public class DeportivasController {
      *
      * @param pista
      */
+    @ApiOperation(value = "Insertar Pista", response = Pista.class,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Petición realizada correctamente", response = Pista.class)}
+    )
     @RequestMapping(path = "/insertarPista", produces = "application/json", method = RequestMethod.POST)
-    public void insertarPista(@RequestBody Pista pista) {
+    public ResponseEntity insertarPista(@RequestBody Pista pista) {
         deportivasService.insertarPista(pista);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     /**
@@ -71,9 +87,15 @@ public class DeportivasController {
      *
      * @param alquilerPista
      */
+    @ApiOperation(value = "Insertar el alquiler de una pista", response = AlquilerPista.class,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Petición realizada correctamente", response = AlquilerPista.class)}
+    )
     @RequestMapping(path = "/alquilerPista", produces = "application/json", method = RequestMethod.POST)
-    public void alquilarPista(@RequestBody AlquilerPista alquilerPista) {
+    public ResponseEntity alquilarPista(@RequestBody AlquilerPista alquilerPista) {
         deportivasService.alquilarPista(alquilerPista);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     /**
@@ -81,7 +103,11 @@ public class DeportivasController {
      *
      * @return
      */
-
+    @ApiOperation(value = "listado de todas las pistas que hay", response = Pista.class,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Petición realizada correctamente", response = Pista.class)}
+    )
     @RequestMapping(value = "/pistas", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<List<Pista>> getListadoPistas() {
         List pista = deportivasService.getListadoTodasLasPistas();
@@ -93,10 +119,15 @@ public class DeportivasController {
      *
      * @return
      */
+    @ApiOperation(value = "listado de todas las pistas que hay por su tipo", response = Pista.class,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Petición realizada correctamente", response = Pista.class)}
+    )
     @RequestMapping(value = "/pistasTipo/{tipo}", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<List<Pista>> getListadoPistasPorTipo(@PathVariable String tipo) {
-        List pista = deportivasService.getListaPistasPorTipo(tipo);
-        return new ResponseEntity<>(pista, HttpStatus.OK);
+        List pistatipo = deportivasService.getListaPistasPorTipo(tipo);
+        return new ResponseEntity<>(pistatipo, HttpStatus.OK);
     }
 
     /**
@@ -105,6 +136,11 @@ public class DeportivasController {
      * @param id
      * @return
      */
+    @ApiOperation(value = "listado de una pista concreta por su id", response = Pista.class,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Petición realizada correctamente", response = Pista.class)}
+    )
     @RequestMapping(value = "/pistas/{id}", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<Pista> getPistaConcreta(@PathVariable int id) {
         Pista pista = deportivasService.getPistaConcretaPorId(id);
@@ -116,10 +152,10 @@ public class DeportivasController {
      *
      * @return
      */
-    @ApiOperation(value = "lisado de las pistas", response = Usuario.class,
+    @ApiOperation(value = "lisado de las pistas que un usuario tiene alquiladas", response = AlquilerPista.class,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Petición realizada correctamente", response = Usuario.class)}
+            @ApiResponse(code = 200, message = "Petición realizada correctamente", response = AlquilerPista.class)}
     )
     @RequestMapping(value = "/pistasAlquiladas/{usuarioId}/{fecha}", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<List<AlquilerPista>> getListadoPistasAlquiladasEnUnaFechaByUsuario(@PathVariable int usuarioId,
@@ -134,29 +170,29 @@ public class DeportivasController {
      * @param usuarioId
      * @param alquilerPista
      */
-    @ApiOperation(value = "borrar alquiler de pista de un usuario", response = Usuario.class,
+    @ApiOperation(value = "borrar alquiler de pista de un usuario", response = AlquilerPista.class,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Petición realizada correctamente", response = Usuario.class)}
+            @ApiResponse(code = 200, message = "Petición realizada correctamente", response = AlquilerPista.class)}
     )
     @RequestMapping(value = "/pistasAlquiladas/{usuarioId}", method = RequestMethod.DELETE, produces = "application/json")
     public ResponseEntity borrarPistaAlquiladaPorUsuario(@PathVariable int usuarioId,
-                                               @RequestBody AlquilerPista alquilerPista) {
+                                                         @RequestBody AlquilerPista alquilerPista) {
         deportivasService.borrarPistaAlquiladaPorUsuario(alquilerPista, usuarioId);
         return new ResponseEntity(HttpStatus.OK);
     }
 
     /**
      * TOKEN
-     *
-     * @param userName
-     * @param password
      */
-    @RequestMapping(value = "/auth/login", method = RequestMethod.POST, produces = "application/json")
-    public void obtenerTokenUsuario(@RequestBody String userName,
-                                    @RequestBody String password) {
+    @ApiOperation(value ="Obtener el token", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Petición realizada correctamente", response = AlquilerPista.class)}
+    )
+    @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json")
+    public void obtenerTokenUsuario() {
+        //Si estamos probando desde postman o alguna aplicacio similar, nos vamos al apartado headers y ahi aparecerá nuesro token donde pone authorization
     }
-
 
 
 }

@@ -1,7 +1,7 @@
-package jc.guerrero.pista.deportivas.springpistasdeportivas.Security;
+package jc.guerrero.pista.deportivas.springpistasdeportivas.security;
+
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jc.guerrero.pista.deportivas.springpistasdeportivas.domain.Usuario;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,9 +17,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
 
-/**
- * Created by Juan Carlos on 30/10/2017.
- */
 public class LoginFilter extends AbstractAuthenticationProcessingFilter {
 
     public LoginFilter(String url, AuthenticationManager authManager) {
@@ -27,16 +24,15 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
         setAuthenticationManager(authManager);
     }
 
-//    public String tokenCorrecto(){
-//
-//    }
-
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
-        // obtenemos el body de la peticion que asumimos viene en formato JSON
-        InputStream body = request.getInputStream();
+    public Authentication attemptAuthentication(
+            HttpServletRequest req, HttpServletResponse res)
+            throws AuthenticationException, IOException, ServletException {
 
-        // Asumimos que el body tendrá el siguiente JSON por ejemplo  {"username":"pepito", "password":"el de los palotes"}
+        // obtenemos el body de la peticion que asumimos viene en formato JSON
+        InputStream body = req.getInputStream();
+
+        // Asumimos que el body tendrá el siguiente JSON  {"username":"jcguerrero21", "password":"1234"}
         // Realizamos un mapeo a nuestra clase User para tener ahi los datos
         User user = new ObjectMapper().readValue(body, User.class);
 
@@ -53,8 +49,11 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
     }
 
     @Override
-    protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res, FilterChain chain,
-                                            Authentication auth) throws IOException, ServletException {
+    protected void successfulAuthentication(
+            HttpServletRequest req,
+            HttpServletResponse res, FilterChain chain,
+            Authentication auth) throws IOException, ServletException {
+
         // Si la autenticacion fue exitosa, agregamos el token a la respuesta
         JwtUtil.addAuthentication(res, auth.getName());
     }
@@ -68,17 +67,15 @@ class User {
         return username;
     }
 
-    public User setUsername(String username) {
+    public void setUsername(String username) {
         this.username = username;
-        return this;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public User setPassword(String password) {
+    public void setPassword(String password) {
         this.password = password;
-        return this;
     }
 }
