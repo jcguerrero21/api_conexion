@@ -3,9 +3,9 @@ package jc.guerrero.pista.deportivas.springpistasdeportivas.web;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import jc.guerrero.pista.deportivas.springpistasdeportivas.security.JwtUtil;
-import jc.guerrero.pista.deportivas.springpistasdeportivas.security.LoginFilter;
-import jc.guerrero.pista.deportivas.springpistasdeportivas.security.SecurityConfig;
+//import jc.guerrero.pista.deportivas.springpistasdeportivas.security.JwtUtil;
+//import jc.guerrero.pista.deportivas.springpistasdeportivas.security.LoginFilter;
+//import jc.guerrero.pista.deportivas.springpistasdeportivas.security.SecurityConfig;
 import jc.guerrero.pista.deportivas.springpistasdeportivas.domain.AlquilerPista;
 import jc.guerrero.pista.deportivas.springpistasdeportivas.domain.Pista;
 import jc.guerrero.pista.deportivas.springpistasdeportivas.domain.Rol;
@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.web.WebAttributes;
+//import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -185,14 +185,14 @@ public class DeportivasController {
     /**
      * TOKEN
      */
-    @ApiOperation(value ="Obtener el token", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Petición realizada correctamente", response = AlquilerPista.class)}
-    )
-    @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json")
-    public void obtenerTokenUsuario() {
-        //Si estamos probando desde postman o alguna aplicacio similar, nos vamos al apartado headers y ahi aparecerá nuesro token donde pone authorization
-    }
+//    @ApiOperation(value ="Obtener el token", produces = MediaType.APPLICATION_JSON_VALUE)
+//    @ApiResponses(value = {
+//            @ApiResponse(code = 200, message = "Petición realizada correctamente", response = AlquilerPista.class)}
+//    )
+//    @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json")
+//    public void obtenerTokenUsuario() {
+//        //Si estamos probando desde postman o alguna aplicacio similar, nos vamos al apartado headers y ahi aparecerá nuesro token donde pone authorization
+//    }
 
 
 }
