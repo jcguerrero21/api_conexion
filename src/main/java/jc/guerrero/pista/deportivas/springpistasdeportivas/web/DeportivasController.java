@@ -29,6 +29,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping(path = "/deportivas")
+@CrossOrigin
 public class DeportivasController {
 
     @Autowired
@@ -47,7 +48,7 @@ public class DeportivasController {
     @RequestMapping(value = "/insertarUsuario", produces = "application/json", method = RequestMethod.POST)
     public ResponseEntity insertarUsuario(@RequestBody Usuario usuario, HttpServletRequest request) {
         deportivasService.insertarUsuario(usuario);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 
     /**
@@ -63,7 +64,7 @@ public class DeportivasController {
     @RequestMapping(value = "/insertarRol", produces = "application/json", method = RequestMethod.POST)
     public ResponseEntity insertarRol(@RequestBody Rol rol) {
         deportivasService.insertarRole(rol);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 
     /**
@@ -79,7 +80,7 @@ public class DeportivasController {
     @RequestMapping(path = "/insertarPista", produces = "application/json", method = RequestMethod.POST)
     public ResponseEntity insertarPista(@RequestBody Pista pista) {
         deportivasService.insertarPista(pista);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 
     /**
@@ -95,7 +96,7 @@ public class DeportivasController {
     @RequestMapping(path = "/alquilerPista", produces = "application/json", method = RequestMethod.POST)
     public ResponseEntity alquilarPista(@RequestBody AlquilerPista alquilerPista) {
         deportivasService.alquilarPista(alquilerPista);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 
     /**
@@ -111,7 +112,7 @@ public class DeportivasController {
     @RequestMapping(value = "/pistas", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<List<Pista>> getListadoPistas() {
         List pista = deportivasService.getListadoTodasLasPistas();
-        return new ResponseEntity<>(pista, HttpStatus.OK);
+        return new ResponseEntity<List<Pista>>(pista, HttpStatus.OK);
     }
 
     /**
